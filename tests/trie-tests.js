@@ -49,6 +49,20 @@ exports.test_casesensitivity = function(test) {
 	test.done();
 };
 
+exports.test_obtain = function(test) {
+	t = new Trie();
+	
+	test.equals(t.obtain('f'), null);
+	
+	t.insert('foo');
+	t.insert('food');
+	t.insert('baz');
+	
+	test.equals(t.children['f'], t.obtain('f'));
+	
+	test.done();
+};
+
 var arrayer = function(trie) {
 	var array = [];
 	var i = 0;
@@ -64,7 +78,6 @@ exports.test_enumerator = function(test) {
 	
 	t.insert('foo');
 	var array = arrayer(t);
-	console.log(array);
 	test.equals(array[0], "foo");
 	
 	test.done();

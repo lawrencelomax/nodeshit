@@ -48,6 +48,10 @@ module.exports = function Trie() {
 			this.children[letter] = subTrie;
 			return subTrie.insert(word.slice(1));
 		},
+		obtain: function(word) {
+			var trie = obtainer(this, word);
+			return trie;
+		},
 		contains: function(word) {
 			word = word.toLowerCase();
 			
