@@ -4,7 +4,6 @@ exports.test_builder = function(test) {
 	var wordfire = undefined;
 	var stream = function(callback) {
 		wordfire = callback;
-		console.log('callback ' + callback);
 	};
 		
 	var trie = triebuilder(stream);
