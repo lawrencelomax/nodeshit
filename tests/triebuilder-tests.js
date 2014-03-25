@@ -1,26 +1,37 @@
 triebuilder = require('../triebuilder.js')
 
 exports.test_builder = function(test) {
-	var wordfire = undefined;
-	var stream = function(callback) {
-		wordfire = callback;
-	};
-		
-	var trie = triebuilder(stream);
-	wordfire('foo');
-	test.equals(trie.contains("foo"), true);
-	test.equals(trie.contains("food"), false);
-	test.equals(trie.contains("bar"), false);
+	var EventEmitter = require('events');
 	
-	wordfire('bar');
-	test.equals(trie.contains("foo"), true);
-	test.equals(trie.contains("food"), false);
-	test.equals(trie.contains("bar"), true);
+	var emitter = new EventEmitter.EventEmitter();
+	triebuilder(emitter, function(trie){
+		test.equals(trie.contains('foo'), true);
+		test.equals(trie.contains('food'), false);
+		test.equals(trie.contains('bar'), false);
+	});
+	emitter.emit('word', 'foo');
+	emitter.emit('end');
 	
-	wordfire('food');
-	test.equals(trie.contains("foo"), true);
-	test.equals(trie.contains("food"), true);
-	test.equals(trie.contains("bar"), true);
+	emitter = new EventEmitter.EventEmitter();
+	triebuilder(emitter, function(trie){
+		test.equals(trie.contains('foo'), true);
+		test.equals(trie.contains('food'), false);
+		test.equals(trie.contains('bar'), true);
+	});	
+	emitter.emit('word', 'foo');
+	emitter.emit('word', 'bar');
+	emitter.emit('end');
+
+	emitter = new EventEmitter.EventEmitter();
+	triebuilder(emitter, function(trie){
+		test.equals(trie.contains('foo'), true);
+		test.equals(trie.contains('food'), true);
+		test.equals(trie.contains('bar'), true);
+	});	
+	emitter.emit('word', 'foo');
+	emitter.emit('word', 'bar');
+	emitter.emit('word', 'food');
+	emitter.emit('end');
 	
 	test.done();
 };

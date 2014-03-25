@@ -1,11 +1,11 @@
 var Trie = require('./trie.js')
 
-module.exports = function(wordstream) {
+module.exports = function(wordemitter, callback) {
 	var trie = new Trie();
-		
-	wordstream( function(value) {
-		var node = trie.insert(value);
-	});
 	
-	return trie;
+	wordemitter.on('word', function(word){
+		var node = trie.insert(word);
+	}).on('end', function() {
+		callback(trie);
+	});	
 };
