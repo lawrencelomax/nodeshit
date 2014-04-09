@@ -1,0 +1,11 @@
+{
+  "name": "nodeshit",
+  "description": "hello world node app",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "hamljs": "0.x",
+	"mocha": ">=0.x",
+	"expect.js": ">=0.x"
+  }
+}
