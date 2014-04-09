@@ -3,43 +3,42 @@ var EventEmitter = require('events');
 var expect = require('expect.js');
 
 describe("the trie builder", function(){
-    var emitter = new EventEmitter.EventEmitter();
     beforeEach(function(){
-       emitter = new EventEmitter.EventEmitter();
+        this.emitter = new EventEmitter.EventEmitter();
     });
 
     it("should accept a word", function(){
-        triebuilder(emitter, function(trie){
+        triebuilder(this.emitter, function(trie){
             console.log(trie);
             expect(trie.contains('foo')).to.be.ok();
             expect(trie.contains('food')).to.not.be.ok();
             expect(trie.contains('bar')).to.not.be.ok();
         });
-        emitter.emit('word', 'foo');
-        emitter.emit('end');
+        this.emitter.emit('word', 'foo');
+        this.emitter.emit('end');
     });
 
     it("should accept a moar words", function(){
-        triebuilder(emitter, function(trie){
+        triebuilder(this.emitter, function(trie){
             console.log(trie);
             expect(trie.contains('foo')).to.be.ok();
             expect(trie.contains('food')).to.not.be.ok();
             expect(trie.contains('bar')).to.be.ok();
         });
-        emitter.emit('word', 'foo');
-        emitter.emit('word', 'bar');
-        emitter.emit('end');
+        this.emitter.emit('word', 'foo');
+        this.emitter.emit('word', 'bar');
+        this.emitter.emit('end');
     });
 
     it("should accept the most words", function(){
-        triebuilder(emitter, function(trie){
+        triebuilder(this.emitter, function(trie){
             expect(trie.contains('foo')).to.be.ok();
             expect(trie.contains('food')).to.be.ok();
             expect(trie.contains('bar')).to.be.ok();
         });
-        emitter.emit('word', 'foo');
-        emitter.emit('word', 'bar');
-        emitter.emit('word', 'food');
-        emitter.emit('end');
+        this.emitter.emit('word', 'foo');
+        this.emitter.emit('word', 'bar');
+        this.emitter.emit('word', 'food');
+        this.emitter.emit('end');
     });
 });
