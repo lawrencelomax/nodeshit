@@ -10,7 +10,6 @@ describe("the trie builder", function(){
 
     it("should accept a word", function(){
         triebuilder(emitter, function(trie){
-            console.log(trie);
             expect(trie.contains('foo')).to.be.ok();
             expect(trie.contains('food')).to.not.be.ok();
             expect(trie.contains('bar')).to.not.be.ok();
@@ -21,7 +20,6 @@ describe("the trie builder", function(){
 
     it("should accept a moar words", function(){
         triebuilder(emitter, function(trie){
-            console.log(trie);
             expect(trie.contains('foo')).to.be.ok();
             expect(trie.contains('food')).to.not.be.ok();
             expect(trie.contains('bar')).to.be.ok();
