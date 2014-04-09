@@ -2,37 +2,40 @@ var Trie = require('../trie.js');
 var expect = require("expect.js");
 
 describe("the trie", function(){
-    var trie = new Trie();
-
+    var trie;
     beforeEach(function() {
        trie = new Trie();
     });
 
     describe("initialized state", function(){
-        expect(trie.contains("")).to.not.be.ok();
-        expect(trie.contains("foo")).to.not.be.ok();
-        expect(trie.contains("food")).to.not.be.ok();
-        expect(trie.contains("bar")).to.not.be.ok();
+        it("should contain things", function(){
+            expect(trie.contains("")).to.not.be.ok();
+            expect(trie.contains("foo")).to.not.be.ok();
+            expect(trie.contains("food")).to.not.be.ok();
+            expect(trie.contains("bar")).to.not.be.ok();
+        });
     });
 
     describe("inserting words", function(){
-        trie.insert("foo");
-        expect(trie.contains("")).to.not.be.ok();
-        expect(trie.contains("foo")).to.be.ok();
-        expect(trie.contains("food")).to.not.be.ok();
-        expect(trie.contains("bar")).to.not.be.ok();
+        it("should progressively accept words", function(){
+            trie.insert("foo");
+            expect(trie.contains("")).to.not.be.ok();
+            expect(trie.contains("foo")).to.be.ok();
+            expect(trie.contains("food")).to.not.be.ok();
+            expect(trie.contains("bar")).to.not.be.ok();
 
-        trie.insert("food");
-        expect(trie.contains("")).to.not.be.ok();
-        expect(trie.contains("foo")).to.be.ok();
-        expect(trie.contains("food")).to.be.ok();
-        expect(trie.contains("bar")).to.not.be.ok();
+            trie.insert("food");
+            expect(trie.contains("")).to.not.be.ok();
+            expect(trie.contains("foo")).to.be.ok();
+            expect(trie.contains("food")).to.be.ok();
+            expect(trie.contains("bar")).to.not.be.ok();
 
-        trie.insert("bar");
-        expect(trie.contains("")).to.not.be.ok();
-        expect(trie.contains("foo")).to.be.ok();
-        expect(trie.contains("food")).to.be.ok();
-        expect(trie.contains("bar")).to.be.ok();
+            trie.insert("bar");
+            expect(trie.contains("")).to.not.be.ok();
+            expect(trie.contains("foo")).to.be.ok();
+            expect(trie.contains("food")).to.be.ok();
+            expect(trie.contains("bar")).to.be.ok();
+        });
     });
 
     describe("case insensitivity", function(){
@@ -64,7 +67,7 @@ describe("the trie", function(){
     });
 
     describe("test enumerator", function(){
-        var arrayer = function(trie) {
+        var arrayMaker = function(trie) {
             var array = [];
             var i = 0;
             trie.enumerate_words(function (word){
@@ -76,7 +79,7 @@ describe("the trie", function(){
 
         it("should enumerate in order", function(){
             trie.insert('foo');
-            var array = arrayer(trie);
+            var array = arrayMaker(trie);
             expect(array[0]).to.equal("foo");
         });
     });
